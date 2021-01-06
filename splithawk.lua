@@ -44,6 +44,16 @@ local function SplitHawk(ip, port)
         tcp:send(key .. param .. "\r\n");
     end
 
+    local function set(key, param)
+        command(key, param);
+    end
+
+    local function get(key, param)
+        command(key, param);
+        local val = tcp:receive();
+        return val;
+    end
+
     local self = {};
 
     --------------
@@ -51,59 +61,59 @@ local function SplitHawk(ip, port)
     --------------
 
     self.startTimer = function()
-        command(Commands.START_TIMER);
+        set(Commands.START_TIMER);
     end
 
     self.startOrSplit = function()
-        command(Commands.START_OR_SPLIT);
+        set(Commands.START_OR_SPLIT);
     end
 
     self.split = function()
-        command(Commands.SPLIT);
+        set(Commands.SPLIT);
     end
 
     self.unsplit = function()
-        command(Commands.UNSPLIT);
+        set(Commands.UNSPLIT);
     end
 
     self.skipSplit = function()
-        command(Commands.SKIP_SPLIT);
+        set(Commands.SKIP_SPLIT);
     end
 
     self.pause = function()
-        command(Commands.PAUSE);
+        set(Commands.PAUSE);
     end
 
     self.resume = function()
-        command(Commands.RESUME);
+        set(Commands.RESUME);
     end
 
     self.reset = function()
-        command(Commands.RESET);
+        set(Commands.RESET);
     end
 
     self.initGameTime = function()
-        command(Commands.INIT_GAME_TIME);
+        set(Commands.INIT_GAME_TIME);
     end
 
     self.setGameTime = function(ms, sec, min, hr)
-        command(Commands.SET_GAME_TIME, formatTime(ms, sec, min, hr));
+        set(Commands.SET_GAME_TIME, formatTime(ms, sec, min, hr));
     end
 
     self.setLoadingTimes = function(ms, sec, min, hr)
-        command(Commands.SET_LOADING_TIMES, formatTime(ms, sec, min, hr));
+        set(Commands.SET_LOADING_TIMES, formatTime(ms, sec, min, hr));
     end
 
     self.pauseGameTime = function()
-        command(Commands.PAUSE_GAME_TIME);
+        set(Commands.PAUSE_GAME_TIME);
     end
 
     self.unpauseGameTime = function()
-        command(Commands.UNPAUSE_GAME_TIME);
+        set(Commands.UNPAUSE_GAME_TIME);
     end
 
     self.setComparison = function(comp)
-        command(Commands.SET_COMPARISON, comp);
+        set(Commands.SET_COMPARISON, comp);
     end
 
     ------------------
@@ -111,39 +121,39 @@ local function SplitHawk(ip, port)
     ------------------
 
     self.getDelta = function()
-        command(Commands.GET_DELTA);
+        return get(Commands.GET_DELTA);
     end
 
     self.getDeltaComparison = function(comp)
-        command(Commands.GET_DELTA, comp);
+        return get(Commands.GET_DELTA, comp);
     end
 
     self.getLastSplitTime = function()
-        command(Commands.GET_LAST_SPLIT_TIME);
+        return get(Commands.GET_LAST_SPLIT_TIME);
     end
 
     self.getComparisonSplitTime = function()
-        command(Commands.GET_COMPARISON_SPLIT_TIME);
+        return get(Commands.GET_COMPARISON_SPLIT_TIME);
     end
 
     self.getCurrentTime = function()
-        command(Commands.GET_CURRENT_TIME);
+        return get(Commands.GET_CURRENT_TIME);
     end
 
     self.getFinalTime = function()
-        command(Commands.GET_FINAL_TIME);
+        return get(Commands.GET_FINAL_TIME);
     end
 
     self.getFinalTimeComparison = function(comp)
-        command(Commands.GET_FINAL_TIME, comp);
+        return get(Commands.GET_FINAL_TIME, comp);
     end
 
     self.getPredictedTime = function(comp)
-        command(Commands.GET_PREDICTED_TIME, comp);
+        return get(Commands.GET_PREDICTED_TIME, comp);
     end
 
     self.getBestPossibleTime = function()
-        command(Commands.GET_BEST_POSSIBLE_TIME);
+        return get(Commands.GET_BEST_POSSIBLE_TIME);
     end
 
     -------------------
@@ -151,19 +161,19 @@ local function SplitHawk(ip, port)
     -------------------
 
     self.getSplitIndex = function()
-        command(Commands.GET_SPLIT_INDEX);
+        return get(Commands.GET_SPLIT_INDEX);
     end
 
     self.getCurrentSplitName = function()
-        command(Commands.GET_CURRENT_SPLIT_NAME);
+        return get(Commands.GET_CURRENT_SPLIT_NAME);
     end
 
     self.getPreviousSplitName = function()
-        command(Commands.GET_PREVIOUS_SPLIT_NAME);
+        return get(Commands.GET_PREVIOUS_SPLIT_NAME);
     end
 
     self.getCurrentTimerPhase = function()
-        command(Commands.GET_CURRENT_TIMER_PHASE);
+        return get(Commands.GET_CURRENT_TIMER_PHASE);
     end
 
     return self;
